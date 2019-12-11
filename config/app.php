@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -121,9 +121,11 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+    'log_max_files'=>env('APP_MAX_FILES', 30),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +173,7 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\HelperServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
