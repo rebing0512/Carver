@@ -4,11 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [{
+        "type": "composer",
+        "url": "https://packagist.mbcore.com"
+    }],
     "require": {
         "php": ">=7.0.0",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "mbcore/core": "dev-master",
+        "pda/pheanstalk": "^3.2"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
