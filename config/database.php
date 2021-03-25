@@ -117,4 +117,14 @@ return [
 
     ],
 
+    'redis_token' => [
+        'host' =>env('REDIS_TOKEN_HOST', '127.0.0.1'),
+        'password' => env('REDIS_TOKEN_PASSWORD', null),
+        'port' => env('REDIS_TOKEN_PORT', 6379),
+        'database' => 10,
+//            'persistent'=>true,
+        'read_write_timeout' => 0,//new
+    ],
+
+
 ];

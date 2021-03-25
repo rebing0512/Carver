@@ -73,6 +73,12 @@ return [
             'connection' => 'default',
         ],
 
+        'redis_token' => [
+            'driver' => 'redis',
+            'connection' => 'redis_token',
+            'prefix' => 'redis_token'
+        ]
+
     ],
 
     /*

@@ -1,5 +1,27 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| 引入全局执行函数
+|--------------------------------------------------------------------------
+|
+| 兼容后期用C扩展，扩展后直接不再加载php实现,避免在网络可请求的目录引入文件
+|
+*/
 
+if (!extension_loaded('PettyBrick')) {
+    if (file_exists(__DIR__ . '/../PettyBrick.php')) {
+        require __DIR__ . '/../PettyBrick.php';
+    }
+}
+//if (!extension_loaded('PettyBrick')) {
+//    if (file_exists(__DIR__ . '/../PettyBrick.php')) {
+//        $host = $_SERVER['HTTP_HOST'];
+//        if( (!(strpos($host, "Admin")===0))){
+//            define('CLOSE_ACCESS_TOKEN',true);
+//        }
+//        require __DIR__ . '/../PettyBrick.php';
+//    }
+//}
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
