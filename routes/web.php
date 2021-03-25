@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group([
+    'namespace'=>'Api',
+],function(\Illuminate\Routing\Router $router){
+    # excel导出
+    $router->any('phpExcel','ApiController@phpExcel');
+});

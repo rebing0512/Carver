@@ -14,3 +14,4 @@ yarn-error.log
 _ide_helper.php
 /config/mbcore_*.php
 /PettyBrick.php
+/public/nginx.htaccess
