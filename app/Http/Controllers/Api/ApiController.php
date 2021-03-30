@@ -95,4 +95,39 @@ class ApiController extends Controller
         $writer = SheetIOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     }
+
+    # 初步评审test
+    public function test1(){
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+        # 冻结首列/首行、第二行、第三行
+        $spreadsheet->getActiveSheet()->freezePane("B4");
+        # 设置工作表标题名称
+        $title = '附件二：评选标准表（初步评审）';
+        $item_name = '项目名称：中国电信股份有限公司滁州分公司2021-2023年法律顾问服务采购项目';
+        $item_num = '项目编号：AHCZ20210003';
+        $candidate = [
+            '参选人1','参选人2','参选人3','参选人4','参选人5'
+        ];
+        # 表头
+        $worksheet->setCellValueByColumnAndRow(1, 1, $title);
+        # 项目名称
+        $worksheet->setCellValueByColumnAndRow(1, 2, $item_name);
+        # 项目编号
+        $worksheet->setCellValueByColumnAndRow(1, 3, $item_num);
+        # 设置单元格内容
+        $worksheet->setCellValueByColumnAndRow(1, 2, '评审因素');
+        $worksheet->setCellValueByColumnAndRow(1, 2, '评审标准');
+        $i = 4;
+        foreach($candidate as $key=>$val) {
+            $worksheet->setCellValueByColumnAndRow($i, 4, $val);
+            $i++;
+        }
+        # 默认列宽
+        $spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(40);
+        # C列
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(120);
+        # 默认行高
+        $worksheet->getDefaultRowDimension()->setRowHeight(40);
+    }
 }
