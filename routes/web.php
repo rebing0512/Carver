@@ -19,4 +19,6 @@ Route::group([
 ],function(\Illuminate\Routing\Router $router){
     # excel导出
     $router->any('phpExcel','ApiController@phpExcel');
+    # 初步评审test
+    $router->any('test1','ApiController@test1');
 });

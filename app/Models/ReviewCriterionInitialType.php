@@ -10,4 +10,8 @@ class ReviewCriterionInitialType extends Model
     use SoftDeletes;
 
     public $table = 'review_criterion_initial_type';
+
+    public function review(){
+        return $this->hasMany(ReviewCriterionInitial::class,'type_id','id');
+    }
 }
