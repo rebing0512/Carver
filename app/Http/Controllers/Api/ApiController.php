@@ -227,4 +227,8 @@ class ApiController extends Controller
         $writer = SheetIOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     }
+
+    public function test2(){
+        return 'test auto update';
+    }
 }
