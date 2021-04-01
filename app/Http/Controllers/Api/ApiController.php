@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory as SheetIOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Borders;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
@@ -31,6 +32,11 @@ class ApiController extends Controller
         # 设置单元格内容
         $worksheet->setCellValueByColumnAndRow(1, 1, '用户信息');
         $worksheet->setCellValueByColumnAndRow(1, 2, '姓名');
+        # 设置对角线
+        $spreadsheet->getActiveSheet()->getStyle('F1')->getBorders()->setDiagonalDirection(Borders::DIAGONAL_DOWN );
+        $spreadsheet->getActiveSheet()->getStyle('F1')->getBorders()->getDiagonal()-> setBorderStyle(Border::BORDER_THIN);
+//        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(Fill::FILL_SOLID)
+//            ->getStartColor()->setARGB(Color::COLOR_DARKGREEN);
         $worksheet->setCellValueByColumnAndRow(2, 2, '手机号');
         $worksheet->setCellValueByColumnAndRow(3, 2, 'openid');
         $worksheet->setCellValueByColumnAndRow(4, 2, '真实姓名');
@@ -89,6 +95,11 @@ class ApiController extends Controller
         $total_rows = $len + 2;
         # 添加所有边框/居中
         $worksheet->getStyle('A1:E'.$total_rows)->applyFromArray($styleArrayBody);
+//        $spreadsheet->getActiveSheet()->getProtection()->setPassword('PhpSpreadsheet');
+//        $spreadsheet->getActiveSheet()->getProtection()->setSheet(true);
+//        $spreadsheet->getActiveSheet()->getProtection()->setSort(true);
+//        $spreadsheet->getActiveSheet()->getProtection()->setInsertRows(true);
+//        $spreadsheet->getActiveSheet()->getProtection()->setFormatCells(true);
         $filename = '用户信息.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -101,6 +112,10 @@ class ApiController extends Controller
     public function test1(){
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
+        # 默认列宽
+        $spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(14);
+        # 默认行高
+        $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(40);
         # 冻结首列/首行、第二行、第三行、第四行
         $spreadsheet->getActiveSheet()->freezePane("B5");
         # 设置工作表标题名称
@@ -124,12 +139,8 @@ class ApiController extends Controller
             $worksheet->setCellValueByColumnAndRow($i, 4, $val);
             $i++;
         }
-        # 默认列宽
-        $spreadsheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(14);
         # C列
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(120);
-        # 默认行高
-        $worksheet->getDefaultRowDimension()->setRowHeight(40);
         # 合并单元格
         $worksheet->mergeCells('A1:C1');
         $worksheet->mergeCells('A2:C2');
@@ -186,8 +197,11 @@ class ApiController extends Controller
                     $worksheet->setCellValueByColumnAndRow(3, $j, $val['criterion']);
                     $j++;
                 }
-                # 合并单元格 todo:合并异常
-//                $worksheet->mergeCells('A'.$i.':A'.$j);
+                \Log::notice('初步评审test--$i:'.$i);
+                \Log::notice('初步评审test--$j:'.($j-1));
+                \Log::notice('初步评审test--$len:'.$len);
+                # 合并单元格
+                $worksheet->mergeCells('A'.$i.':A'.($j-1));
                 $i = $len + $i;
             }
         }
@@ -202,9 +216,10 @@ class ApiController extends Controller
                 'horizontal' => Alignment::HORIZONTAL_LEFT,
             ],
         ];
-        $total_rows = $rows_counts + 5;
+        $total_rows = $rows_counts + 4;
+        \Log::notice('初步评审test--$total_rows:'.$total_rows);
         # 添加所有边框/居中
-        $worksheet->getStyle('A5:I' . $total_rows)->applyFromArray($styleArrayBody);
+        $worksheet->getStyle('A5:Z' . $total_rows)->applyFromArray($styleArrayBody);
         $filename = $title.'.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
