@@ -21,4 +21,6 @@ Route::group([
     $router->any('phpExcel','ApiController@phpExcel');
     # 初步评审test
     $router->any('test1','ApiController@test1');
+    # 唱价记录test
+    $router->any('test2','ApiController@test2');
 });
